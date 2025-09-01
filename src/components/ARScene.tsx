@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import type { GLTF } from 'three/addons/loaders/GLTFLoader.js';
 import { ARButton } from 'three/addons/webxr/ARButton.js';
 import { Animal } from '../App';
 
@@ -116,11 +115,11 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
     const loader = new GLTFLoader();
     loader.load(
       animal.modelPath,
-      (gltf: GLTF) => {
+      (gltf) => {
         const model = gltf.scene;
         
         // Setup model properties
-        model.scale.set(0.3, 0.3, 0.3);
+        model.scale.set(0.8, 0.8, 0.8);
         
         // Center the model
         const box = new THREE.Box3().setFromObject(model);
@@ -133,7 +132,6 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
         if (gltf.animations && gltf.animations.length > 0) {
           const mixer = new THREE.AnimationMixer(model);
           mixerRef.current = mixer;
-          
           const action = mixer.clipAction(gltf.animations[0]);
           action.play();
         }
@@ -154,19 +152,24 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
     // Handle select events (place model)
     function onSelect() {
       if (reticleRef.current?.visible && modelRef.current && !isModelPlaced) {
-        // Clone the model to place it
-        const modelClone = modelRef.current.clone();
-        
-        // Position model at reticle location
+        const model = modelRef.current;
+
+        // centralizar/base no chão como antes
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+        const center = box.getCenter(new THREE.Vector3());
+        model.position.sub(center);
+        model.position.y -= size.y / 2;
+
+        // posicionar no reticle
         if (reticleRef.current.matrix) {
-          modelClone.position.setFromMatrixPosition(reticleRef.current.matrix);
-          modelClone.quaternion.setFromRotationMatrix(reticleRef.current.matrix);
+          model.position.setFromMatrixPosition(reticleRef.current.matrix);
+          model.quaternion.setFromRotationMatrix(reticleRef.current.matrix);
         }
-        
-        scene.add(modelClone);
+
+        sceneRef.current?.add(model);
         setIsModelPlaced(true);
-        
-        // Hide reticle after placing model
         reticleRef.current.visible = false;
       }
     }
