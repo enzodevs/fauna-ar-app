@@ -14,6 +14,7 @@ export type Animal = {
   isAvailable: boolean;
 };
 
+
 const animals: Animal[] = [
   {
     id: 'jaguar',

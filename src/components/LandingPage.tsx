@@ -11,9 +11,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect }) =>
       {/* Header */}
       <header className="pt-8 pb-4 px-6">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold text-white text-center mb-2 animate-fade-in">
-            Fauna AR
-          </h1>
+          <div className="flex justify-center mb-6 animate-fade-in">
+            <img 
+              src="/logo.webp" 
+              alt="Fauna AR" 
+              className="h-16 md:h-24 lg:h-28 w-auto object-contain max-w-full"
+            />
+          </div>
           <p className="text-xl md:text-2xl text-jungle-200 text-center animate-slide-up">
             Explore a vida selvagem brasileira em realidade aumentada
           </p>
@@ -88,7 +92,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect }) =>
 
       {/* Footer */}
       <footer className="mt-auto py-8 text-center text-gray-400">
-        <p>Aponte sua câmera para o marcador Hiro para visualizar os animais</p>
+        <p>Permita acesso à câmera para visualizar os animais</p>
         <p className="mt-2 text-sm">Desenvolvido com React + Three.js + AR.js</p>
       </footer>
     </div>
