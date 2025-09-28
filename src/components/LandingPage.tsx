@@ -93,7 +93,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect }) =>
       {/* Footer */}
       <footer className="mt-auto py-8 text-center text-gray-400">
         <p>Permita acesso à câmera para visualizar os animais</p>
-        <p className="mt-2 text-sm">Desenvolvido com React + Three.js + AR.js</p>
+        <p className="mt-2 text-sm">Desenvolvido com React + Three.js + WebXR</p>
       </footer>
     </div>
   );

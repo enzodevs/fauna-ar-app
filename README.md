@@ -1,22 +1,22 @@
 # Fauna AR 🐆
 
-Aplicação web de realidade aumentada para visualização de animais da fauna brasileira usando marcadores AR.
+Aplicação web de realidade aumentada para visualização de animais da fauna brasileira usando WebXR.
 
 ## 🚀 Tecnologias
 
 - **React** + **TypeScript** - Framework e tipagem
 - **Vite** - Build tool e dev server
 - **Three.js** - Renderização 3D
-- **AR.js** - Realidade aumentada baseada em marcadores
+- **WebXR** - Realidade aumentada nativa
 - **Tailwind CSS** - Estilização
 
 ## 📋 Pré-requisitos
 
 - Node.js 18+
 - NPM ou Yarn
-- Navegador com suporte a WebRTC (Chrome recomendado)
-- Câmera (celular ou webcam)
-- Marcador Hiro impresso
+- Navegador com suporte a WebXR (Chrome Android recomendado)
+- Câmera (dispositivo móvel)
+- HTTPS ou localhost (requisito WebXR)
 
 ## 🔧 Instalação
 
@@ -32,12 +32,12 @@ npm run build
 ```
 ## 📱 Como Usar
 
-1. **Baixe o marcador Hiro**: [Download aqui](https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png)
-2. **Imprima o marcador** ou abra em outro dispositivo
-3. **Acesse a aplicação** no navegador mobile
-4. **Permita o acesso à câmera**
-5. **Selecione um animal** na tela inicial
-6. **Aponte a câmera** para o marcador Hiro
+1. **Acesse a aplicação** no Chrome Android (navegador recomendado)
+2. **Permita o acesso à câmera** quando solicitado
+3. **Selecione um animal** na tela inicial
+4. **Toque em "START AR"** para iniciar a sessão WebXR
+5. **Procure por uma superfície plana** (mesa, chão, etc.)
+6. **Toque na tela** quando o círculo de mira aparecer para posicionar o animal
 
 ## 🗂️ Estrutura do Projeto
 
@@ -67,22 +67,23 @@ fauna-ar/
 3. Recomenda-se modelos otimizados (<5MB)
 
 ### Compatibilidade
-- ✅ Chrome Android
-- ✅ Edge Mobile
-- ⚠️ Safari iOS (limitado)
-- ❌ Desktop (sem AR, apenas visualização 3D)
+- ✅ Chrome Android (recomendado)
+- ⚠️ Edge Mobile (limitado)
+- ❌ Safari iOS (WebXR não suportado)
+- ❌ Navegadores desktop (WebXR AR não disponível)
 
 ## 🎯 Funcionalidades
 
 - [x] Landing page com cards de animais
-- [x] Integração com câmera
-- [x] Carregamento de modelos 3D
-- [x] Visualização 3D básica
-- [x] Informações sobre os animais
-- [ ] Detecção de marcador AR (próxima versão)
+- [x] Integração WebXR com hit-testing
+- [x] Carregamento de modelos 3D GLB/GLTF
+- [x] Posicionamento de modelos em superfícies reais
+- [x] Informações detalhadas sobre os animais
+- [x] Animações dos modelos 3D
+- [x] Detecção de superfícies planas
 - [ ] Múltiplos animais funcionais
-- [ ] Animações dos modelos
 - [ ] Sons dos animais
+- [ ] Interações gestuais
 
 ## 🚀 Deploy
 
