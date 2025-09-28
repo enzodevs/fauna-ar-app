@@ -97,7 +97,3 @@ npm run build
 ## 📝 Licença
 
 MIT
-
-## 👨‍💻 Desenvolvido por
-
-Enzo - Projeto AR educacional sobre fauna brasileira
