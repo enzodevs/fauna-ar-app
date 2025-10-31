@@ -27,24 +27,24 @@ const animals: Animal[] = [
     isAvailable: true
   },
   {
-    id: 'toucan',
-    name: 'Tucano-toco',
-    scientificName: 'Ramphastos toco',
-    description: 'Ave símbolo do Brasil, conhecido pelo seu bico colorido.',
-    habitat: 'Florestas tropicais e cerrado',
-    conservationStatus: 'Pouco preocupante',
-    modelPath: '/models/toucan.glb',
-    isAvailable: false
+    id: 'parrot',
+    name: 'Arara-azul',
+    scientificName: 'Anodorhynchus hyacinthinus',
+    description: 'A maior arara do mundo, símbolo da fauna brasileira.',
+    habitat: 'Pantanal, cerrado e florestas',
+    conservationStatus: 'Vulnerável',
+    modelPath: '/models/parrot.glb',
+    isAvailable: true
   },
   {
-    id: 'sloth',
-    name: 'Preguiça-de-três-dedos',
-    scientificName: 'Bradypus variegatus',
-    description: 'Mamífero arborícola conhecido por seus movimentos lentos.',
-    habitat: 'Florestas tropicais',
+    id: 'capivara',
+    name: 'Capivara',
+    scientificName: 'Hydrochoerus hydrochaeris',
+    description: 'O maior roedor do mundo, muito sociável e semi-aquático.',
+    habitat: 'Margens de rios e lagos',
     conservationStatus: 'Pouco preocupante',
-    modelPath: '/models/sloth.glb',
-    isAvailable: false
+    modelPath: '/models/capivara.glb',
+    isAvailable: true
   }
 ];
 

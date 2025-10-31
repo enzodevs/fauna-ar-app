@@ -45,7 +45,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect }) =>
                   <div className="p-8 pb-4">
                     <div className="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-white/20 to-white/5 rounded-full flex items-center justify-center backdrop-blur-sm">
                       <span className="text-6xl">
-                        {animal.id === 'jaguar' ? '🐆' : animal.id === 'toucan' ? '🦜' : '🦥'}
+                        {animal.id === 'jaguar' ? '🐆' : animal.id === 'parrot' ? '🦜' : '🦫'}
                       </span>
                     </div>
                   </div>
