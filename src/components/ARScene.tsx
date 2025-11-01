@@ -88,11 +88,15 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
     arButton.style.zIndex = '100';
     mountRef.current.appendChild(arButton);
 
-    // Add lighting
-    const ambientLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 0.6);
+    // Add lighting - aumentado para arara
+    const isParrot = animal.id === 'parrot';
+    const ambientIntensity = isParrot ? 1.0 : 0.6;
+    const directionalIntensity = isParrot ? 1.2 : 0.8;
+    
+    const ambientLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, ambientIntensity);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, directionalIntensity);
     directionalLight.position.set(0.5, 1, 0.25);
     scene.add(directionalLight);
 
@@ -118,8 +122,9 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
       (gltf) => {
         const model = gltf.scene;
         
-        // Setup model properties
-        model.scale.set(0.8, 0.8, 0.8);
+        // Setup model properties - escala específica por animal
+        const scale = animal.id === 'parrot' ? 0.05 : animal.id === 'aligator' || animal.id === 'bear' ? 0.6 : 0.8;
+        model.scale.set(scale, scale, scale);
         
         // Center the model
         const box = new THREE.Box3().setFromObject(model);
@@ -179,7 +184,9 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
       // Update animation mixer
       const delta = clockRef.current.getDelta();
       if (mixerRef.current) {
-        mixerRef.current.update(delta);
+        // Reduzir velocidade de animação para o jacaré
+        const animationSpeed = animal.id === 'aligator' ? delta * 0.5 : delta;
+        mixerRef.current.update(animationSpeed);
       }
 
       // Handle WebXR frame

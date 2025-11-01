@@ -1,11 +1,13 @@
 import { Animal } from '../App';
+import DestaqueDoDia from './DestaqueDoDia';
 
 interface LandingPageProps {
   animals: Animal[];
   onAnimalSelect: (animal: Animal) => void;
+  onNewsClick: () => void;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect, onNewsClick }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-jungle-900 via-jungle-800 to-black">
       {/* Header */}
@@ -45,7 +47,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect }) =>
                   <div className="p-8 pb-4">
                     <div className="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-white/20 to-white/5 rounded-full flex items-center justify-center backdrop-blur-sm">
                       <span className="text-6xl">
-                        {animal.id === 'jaguar' ? '🐆' : animal.id === 'parrot' ? '🦜' : '🦫'}
+                        {animal.id === 'jaguar' ? '🐆' : animal.id === 'parrot' ? '🦜' : animal.id === 'aligator' ? '🐊' : '🐻'}
                       </span>
                     </div>
                   </div>
@@ -90,10 +92,33 @@ const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect }) =>
         </div>
       </main>
 
+      {/* Espécie em Destaque do Dia */}
+      <DestaqueDoDia />
+
+      {/* Seção de Notícias */}
+      <section className="px-6 py-16 bg-gradient-to-b from-transparent to-jungle-900/50">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-in">
+            🌎 Notícias da Natureza
+          </h2>
+          <p className="text-lg md:text-xl text-jungle-300 mb-8 animate-slide-up">
+            Saiba o que está acontecendo no mundo da vida selvagem
+          </p>
+          <button
+            onClick={onNewsClick}
+            className="bg-jungle-600 hover:bg-jungle-700 text-white font-bold px-8 py-4 rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 mx-auto"
+          >
+            Ver notícias
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="mt-auto py-8 text-center text-gray-400">
         <p>Permita acesso à câmera para visualizar os animais</p>
-        <p className="mt-2 text-sm">Desenvolvido com React + Three.js + WebXR</p>
       </footer>
     </div>
   );
