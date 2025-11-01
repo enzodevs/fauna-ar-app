@@ -65,40 +65,41 @@ const Natureza: React.FC<NaturezaProps> = ({ onBack, onArticleClick }) => {
 
           {!loading && !error && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {news.map((item, index) => (
-                <div
-                  key={item.link}
-                  onClick={() => onArticleClick(item)}
-                  className="cursor-pointer bg-jungle-700/30 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 animate-slide-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {item.thumbnail && (
+              {news.map((item, index) => {
+                const imageUrl = item.thumbnail || item.enclosure?.link || '/logo.webp';
+                return (
+                  <div
+                    key={item.link}
+                    onClick={() => onArticleClick(item)}
+                    className="cursor-pointer bg-jungle-700/30 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 animate-slide-up"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
                     <img 
-                      src={item.thumbnail} 
+                      src={imageUrl} 
                       alt={item.title} 
                       className="w-full h-48 object-cover"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = '/logo.webp';
                       }}
                     />
-                  )}
-                  <div className="p-4">
-                    <h2 className="text-lg font-semibold mb-2 line-clamp-2">{item.title}</h2>
-                    <p className="text-gray-300 text-sm line-clamp-3 mb-3">
-                      {item.description?.replace(/<[^>]*>/g, '')}
-                    </p>
-                    <div className="flex items-center justify-between text-xs text-jungle-300">
-                      <span>{new Date(item.pubDate).toLocaleDateString('pt-BR')}</span>
-                      <span className="flex items-center gap-1">
-                        Ler mais
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
+                    <div className="p-4">
+                      <h2 className="text-lg font-semibold mb-2 line-clamp-2">{item.title}</h2>
+                      <p className="text-gray-300 text-sm line-clamp-3 mb-3">
+                        {item.description?.replace(/<[^>]*>/g, '')}
+                      </p>
+                      <div className="flex items-center justify-between text-xs text-jungle-300">
+                        <span>{new Date(item.pubDate).toLocaleDateString('pt-BR')}</span>
+                        <span className="flex items-center gap-1">
+                          Ler mais
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

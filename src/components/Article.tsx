@@ -8,6 +8,9 @@ interface ArticleProps {
   author: string;
   link: string;
   onBack: () => void;
+  enclosure?: {
+    link: string;
+  };
 }
 
 const Article: React.FC<ArticleProps> = ({ 
@@ -17,12 +20,15 @@ const Article: React.FC<ArticleProps> = ({
   pubDate, 
   author, 
   link, 
-  onBack 
+  onBack,
+  enclosure
 }) => {
   // Scroll para o topo quando o componente é montado
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const imageUrl = thumbnail || enclosure?.link || '/logo.webp';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-jungle-900 via-jungle-800 to-black text-white">
@@ -44,10 +50,10 @@ const Article: React.FC<ArticleProps> = ({
       {/* Conteúdo do artigo */}
       <article className="max-w-4xl mx-auto px-4 py-8 animate-fade-in">
         {/* Imagem destaque */}
-        {thumbnail && (
+        {imageUrl && (
           <div className="mb-8 rounded-2xl overflow-hidden shadow-2xl">
             <img 
-              src={thumbnail} 
+              src={imageUrl} 
               alt={title} 
               className="w-full h-64 md:h-96 object-cover"
               onError={(e) => {

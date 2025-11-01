@@ -17,6 +17,9 @@ export type NewsArticle = {
   thumbnail: string;
   description: string;
   author: string;
+  enclosure?: {
+    link: string;
+  };
 };
 
 export type AnimalData = {
