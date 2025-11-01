@@ -45,3 +45,7 @@ android.keystore
 app-release-*.apk
 app-release-*.aab
 .gradle/
+
+# Bubblewrap / apksigner signatures
+app-release-*.apk*
+*.idsig
