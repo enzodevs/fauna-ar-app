@@ -1,4 +1,5 @@
-import { Animal } from '../App';
+import { Animal } from '../types';
+import { ANIMAL_EMOJIS } from '../constants/animals';
 import DestaqueDoDia from './DestaqueDoDia';
 
 interface LandingPageProps {
@@ -47,7 +48,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ animals, onAnimalSelect, onNe
                   <div className="p-8 pb-4">
                     <div className="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-white/20 to-white/5 rounded-full flex items-center justify-center backdrop-blur-sm">
                       <span className="text-6xl">
-                        {animal.id === 'jaguar' ? '🐆' : animal.id === 'parrot' ? '🦜' : animal.id === 'aligator' ? '🐊' : '🐻'}
+                        {ANIMAL_EMOJIS[animal.id] || '�'}
                       </span>
                     </div>
                   </div>

@@ -1,18 +1,8 @@
 import { useEffect, useState } from 'react';
-
-interface AnimalData {
-  name: string;
-  taxonomy: {
-    scientific_name: string;
-  };
-  characteristics: {
-    slogan: string;
-    habitat: string;
-    biggest_threat: string;
-    estimated_population_size: string;
-    diet: string;
-  };
-}
+import { AnimalData } from '../types';
+import { ANIMAL_TRANSLATIONS, FEATURED_ANIMALS_POOL } from '../constants/animals';
+import { fetchAnimalData, fetchAnimalImage } from '../services/animalService';
+import { getCachedAnimalData, setCachedAnimalData, getTodayString } from '../utils/cache';
 
 const DestaqueDoDia = () => {
   const [animal, setAnimal] = useState<AnimalData | null>(null);
@@ -20,42 +10,27 @@ const DestaqueDoDia = () => {
   const [animalImage, setAnimalImage] = useState<string>('');
 
   useEffect(() => {
-    const today = new Date().toLocaleDateString('pt-BR');
-    const savedDate = localStorage.getItem('animal_dia_date');
-    const savedData = localStorage.getItem('animal_dia_data');
+    const today = getTodayString();
+    const cachedData = getCachedAnimalData(today);
 
     // Se já tem dados salvos de hoje, usar do cache
-    if (savedDate === today && savedData) {
-      setAnimal(JSON.parse(savedData));
+    if (cachedData) {
+      setAnimal(JSON.parse(cachedData));
       setLoading(false);
       return;
     }
 
-    // Lista de animais interessantes para alternar
-    const animals = ['cheetah', 'lion', 'elephant', 'giraffe', 'tiger', 'panda', 'leopard', 'gorilla'];
-    const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+    // Seleciona animal aleatório
+    const randomAnimal = FEATURED_ANIMALS_POOL[
+      Math.floor(Math.random() * FEATURED_ANIMALS_POOL.length)
+    ];
 
-    const apiKey = import.meta.env.VITE_API_NINJAS_KEY;
-
-    if (!apiKey || apiKey === 'SUA_API_KEY_AQUI') {
-      console.warn('API Key não configurada');
-      setLoading(false);
-      return;
-    }
-
-    fetch(`https://api.api-ninjas.com/v1/animals?name=${randomAnimal}`, {
-      headers: { 'X-Api-Key': apiKey },
-    })
-      .then((res) => res.json())
+    fetchAnimalData(randomAnimal)
       .then((data) => {
-        if (data && data.length > 0) {
-          const picked = data[0];
-          setAnimal(picked);
-          localStorage.setItem('animal_dia_date', today);
-          localStorage.setItem('animal_dia_data', JSON.stringify(picked));
-          
-          // Buscar imagem da Wikipedia
-          fetchWikipediaImage(picked.name);
+        if (data) {
+          setAnimal(data);
+          setCachedAnimalData(today, JSON.stringify(data));
+          fetchAnimalImage(data.name).then(setAnimalImage);
         }
         setLoading(false);
       })
@@ -64,69 +39,6 @@ const DestaqueDoDia = () => {
         setLoading(false);
       });
   }, []);
-
-  // Função para buscar imagem da Wikipedia
-  const fetchWikipediaImage = async (animalName: string) => {
-    const pixabayKey = import.meta.env.VITE_PIXABAY_API_KEY;
-    const apiNinjasKey = import.meta.env.VITE_API_NINJAS_KEY;
-    
-    // 1ª tentativa: Pixabay - busca específica pelo nome do animal
-    try {
-      const searchQuery = encodeURIComponent(animalName);
-      const pixabayResponse = await fetch(
-        `https://pixabay.com/api/?key=${pixabayKey}&q=${searchQuery}&image_type=photo&category=animals&safesearch=true&per_page=3`
-      );
-      
-      if (pixabayResponse.ok) {
-        const data = await pixabayResponse.json();
-        if (data.hits && data.hits.length > 0) {
-          // Pega uma imagem aleatória dos resultados
-          const randomHit = data.hits[Math.floor(Math.random() * data.hits.length)];
-          setAnimalImage(randomHit.webformatURL);
-          return;
-        }
-      }
-    } catch (err) {
-      console.warn('Pixabay failed, trying API Ninjas:', err);
-    }
-
-    // 2ª tentativa: API Ninjas random wildlife image
-    try {
-      const randomImageResponse = await fetch(
-        'https://api.api-ninjas.com/v1/randomimage?category=wildlife',
-        { 
-          headers: { 'X-Api-Key': apiNinjasKey },
-        }
-      );
-      
-      if (randomImageResponse.ok) {
-        const blob = await randomImageResponse.blob();
-        const imageUrl = URL.createObjectURL(blob);
-        setAnimalImage(imageUrl);
-        return;
-      }
-    } catch (err) {
-      console.warn('API Ninjas image failed, trying Wikipedia:', err);
-    }
-
-    // 3ª tentativa: Wikipedia fallback
-    try {
-      const response = await fetch(
-        `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(animalName)}`
-      );
-      const data = await response.json();
-      
-      if (data.thumbnail?.source) {
-        setAnimalImage(data.thumbnail.source);
-      } else {
-        // Fallback final: imagem genérica
-        setAnimalImage('https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=800&h=600&fit=crop&q=80');
-      }
-    } catch (err) {
-      console.error('Erro ao buscar imagem:', err);
-      setAnimalImage('https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=800&h=600&fit=crop&q=80');
-    }
-  };
 
   if (loading) {
     return (
@@ -140,19 +52,7 @@ const DestaqueDoDia = () => {
 
   if (!animal) return null;
 
-  // Traduzir o nome do animal (básico)
-  const animalNames: Record<string, string> = {
-    cheetah: 'Guepardo',
-    lion: 'Leão',
-    elephant: 'Elefante',
-    giraffe: 'Girafa',
-    tiger: 'Tigre',
-    panda: 'Panda',
-    leopard: 'Leopardo',
-    gorilla: 'Gorila',
-  };
-
-  const displayName = animalNames[animal.name.toLowerCase()] || animal.name;
+  const displayName = ANIMAL_TRANSLATIONS[animal.name.toLowerCase()] || animal.name;
 
   return (
     <section className="px-6 py-16 bg-gradient-to-b from-transparent to-jungle-900/30">

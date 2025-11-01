@@ -3,71 +3,9 @@ import LandingPage from './components/LandingPage';
 import ARScene from './components/ARScene';
 import Natureza from './components/Natureza';
 import Article from './components/Article';
+import { Animal, NewsArticle } from './types';
+import { ANIMALS_DATA } from './constants/animals';
 import './index.css';
-
-export type Animal = {
-  id: string;
-  name: string;
-  scientificName: string;
-  description: string;
-  habitat: string;
-  conservationStatus: string;
-  modelPath: string;
-  isAvailable: boolean;
-};
-
-export type NewsArticle = {
-  title: string;
-  link: string;
-  pubDate: string;
-  thumbnail: string;
-  description: string;
-  author: string;
-};
-
-
-const animals: Animal[] = [
-  {
-    id: 'jaguar',
-    name: 'Onça-pintada',
-    scientificName: 'Panthera onca',
-    description: 'O maior felino das Américas, símbolo da fauna brasileira.',
-    habitat: 'Florestas tropicais, cerrado e pantanal',
-    conservationStatus: 'Quase ameaçada',
-    modelPath: '/models/jaguar.glb',
-    isAvailable: true
-  },
-  {
-    id: 'parrot',
-    name: 'Arara Comum',
-    scientificName: 'Ara macao',
-    description: 'Colorida arara com plumagem vermelha, amarela e azul, conhecida por sua beleza e inteligência.',
-    habitat: 'Florestas tropicais e cerrado',
-    conservationStatus: 'Pouco preocupante',
-    modelPath: '/models/parrot.glb',
-    isAvailable: true
-  },
-  {
-    id: 'aligator',
-    name: 'Jacaré',
-    scientificName: 'Caiman yacare',
-    description: 'Réptil semi-aquático predador, importante para o ecossistema das águas brasileiras.',
-    habitat: 'Rios, lagos e pântanos',
-    conservationStatus: 'Pouco preocupante',
-    modelPath: '/models/aligator.glb',
-    isAvailable: true
-  },
-  {
-    id: 'bear',
-    name: 'Urso',
-    scientificName: 'Tremarctos ornatus',
-    description: 'Único urso da América do Sul, identificável pelas marcas brancas em volta dos olhos.',
-    habitat: 'Florestas montanhosas e neblinas dos Andes',
-    conservationStatus: 'Vulnerável',
-    modelPath: '/models/bear.glb',
-    isAvailable: true
-  }
-];
 
 function App() {
   const [currentView, setCurrentView] = useState<'landing' | 'ar' | 'news' | 'article'>('landing');
@@ -105,7 +43,7 @@ function App() {
     <div className="w-full min-h-screen bg-gradient-to-br from-jungle-900 to-jungle-800">
       {currentView === 'landing' ? (
         <LandingPage 
-          animals={animals} 
+          animals={ANIMALS_DATA} 
           onAnimalSelect={handleAnimalSelect}
           onNewsClick={handleNewsClick}
         />

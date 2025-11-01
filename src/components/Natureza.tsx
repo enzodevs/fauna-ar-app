@@ -1,21 +1,13 @@
 import { useEffect, useState } from 'react';
-
-interface NewsItem {
-  title: string;
-  link: string;
-  pubDate: string;
-  thumbnail: string;
-  description: string;
-  author: string;
-}
+import { NewsArticle } from '../types';
 
 interface NaturezaProps {
   onBack: () => void;
-  onArticleClick: (article: NewsItem) => void;
+  onArticleClick: (article: NewsArticle) => void;
 }
 
 const Natureza: React.FC<NaturezaProps> = ({ onBack, onArticleClick }) => {
-  const [news, setNews] = useState<NewsItem[]>([]);
+  const [news, setNews] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

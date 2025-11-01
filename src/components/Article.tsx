@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 interface ArticleProps {
   title: string;
   thumbnail: string;
@@ -17,6 +19,11 @@ const Article: React.FC<ArticleProps> = ({
   link, 
   onBack 
 }) => {
+  // Scroll para o topo quando o componente é montado
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-jungle-900 via-jungle-800 to-black text-white">
       {/* Header com botão voltar */}

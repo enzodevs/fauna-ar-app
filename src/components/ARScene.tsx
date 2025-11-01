@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { ARButton } from 'three/addons/webxr/ARButton.js';
-import { Animal } from '../App';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
+import { Animal } from '../types';
 
 interface ARSceneProps {
   animal: Animal;
