@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "site.faunar.app",
+      "sha256_cert_fingerprints": [
+        "40:FE:4A:CD:35:DF:94:44:B7:F1:C0:F9:D6:67:51:2A:09:34:38:15:3A:40:21:38:36:72:DD:1D:A3:6A:89:32"
+      ]
+    }
+  }
+]

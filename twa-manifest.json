@@ -20,8 +20,8 @@
     "path": "C:\\Users\\ENZO\\SoftEng\\facens\\upx08\\fauna-ar-app\\android.keystore",
     "alias": "faunaar"
   },
-  "appVersionName": "1",
-  "appVersionCode": 1,
+  "appVersionName": "2",
+  "appVersionCode": 2,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://app.faunar.site/manifest.json",
@@ -43,5 +43,5 @@
   "fileHandlers": [],
   "launchHandlerClientMode": "",
   "displayOverride": [],
-  "appVersion": "1"
+  "appVersion": "2"
 }
