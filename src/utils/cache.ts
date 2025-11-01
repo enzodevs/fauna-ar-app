@@ -1,23 +1,28 @@
 const CACHE_DATE_KEY = 'animal_dia_date';
 const CACHE_DATA_KEY = 'animal_dia_data';
+const CACHE_IMAGE_KEY = 'animal_dia_image';
 
-// Cache desabilitado - sempre retorna null para forçar nova busca
 export const getCachedAnimalData = (today: string): string | null => {
-  return null; // Cache desabilitado
+  const savedDate = localStorage.getItem(CACHE_DATE_KEY);
+  const savedData = localStorage.getItem(CACHE_DATA_KEY);
   
-  // Código original do cache (desabilitado):
-  // const savedDate = localStorage.getItem(CACHE_DATE_KEY);
-  // const savedData = localStorage.getItem(CACHE_DATA_KEY);
-  // return savedDate === today && savedData ? savedData : null;
+  return savedDate === today && savedData ? savedData : null;
 };
 
 export const setCachedAnimalData = (today: string, data: string): void => {
-  // Cache desabilitado - não salva nada
-  return;
+  localStorage.setItem(CACHE_DATE_KEY, today);
+  localStorage.setItem(CACHE_DATA_KEY, data);
+};
+
+export const getCachedAnimalImage = (today: string): string | null => {
+  const savedDate = localStorage.getItem(CACHE_DATE_KEY);
+  const savedImage = localStorage.getItem(CACHE_IMAGE_KEY);
   
-  // Código original do cache (desabilitado):
-  // localStorage.setItem(CACHE_DATE_KEY, today);
-  // localStorage.setItem(CACHE_DATA_KEY, data);
+  return savedDate === today && savedImage ? savedImage : null;
+};
+
+export const setCachedAnimalImage = (today: string, imageUrl: string): void => {
+  localStorage.setItem(CACHE_IMAGE_KEY, imageUrl);
 };
 
 export const getTodayString = (): string => {

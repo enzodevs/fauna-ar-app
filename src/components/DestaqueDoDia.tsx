@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { AnimalData } from '../types';
 import { ANIMAL_TRANSLATIONS, FEATURED_ANIMALS_POOL } from '../constants/animals';
 import { fetchAnimalData, fetchAnimalImage } from '../services/animalService';
-import { getCachedAnimalData, setCachedAnimalData, getTodayString } from '../utils/cache';
+import { getCachedAnimalData, setCachedAnimalData, getCachedAnimalImage, setCachedAnimalImage, getTodayString } from '../utils/cache';
 
 const DestaqueDoDia = () => {
   const [animal, setAnimal] = useState<AnimalData | null>(null);
@@ -12,10 +12,14 @@ const DestaqueDoDia = () => {
   useEffect(() => {
     const today = getTodayString();
     const cachedData = getCachedAnimalData(today);
+    const cachedImage = getCachedAnimalImage(today);
 
     // Se já tem dados salvos de hoje, usar do cache
     if (cachedData) {
       setAnimal(JSON.parse(cachedData));
+      if (cachedImage) {
+        setAnimalImage(cachedImage);
+      }
       setLoading(false);
       return;
     }
@@ -30,7 +34,12 @@ const DestaqueDoDia = () => {
         if (data) {
           setAnimal(data);
           setCachedAnimalData(today, JSON.stringify(data));
-          fetchAnimalImage(data.name).then(setAnimalImage);
+          
+          // Busca a imagem e salva no cache
+          fetchAnimalImage(data.name).then((imageUrl) => {
+            setAnimalImage(imageUrl);
+            setCachedAnimalImage(today, imageUrl);
+          });
         }
         setLoading(false);
       })

@@ -27,14 +27,15 @@ export const fetchPixabayImage = async (query: string): Promise<string | null> =
 
   try {
     const response = await fetch(
-      `https://pixabay.com/api/?key=${PIXABAY_KEY}&q=${encodeURIComponent(query)}&image_type=photo&category=animals&safesearch=true&per_page=3`
+      `https://pixabay.com/api/?key=${PIXABAY_KEY}&q=${encodeURIComponent(query)}&image_type=photo&category=animals&safesearch=true&per_page=10`
     );
     
     if (response.ok) {
       const data: PixabayResponse = await response.json();
       if (data.hits && data.hits.length > 0) {
-        const randomHit = data.hits[Math.floor(Math.random() * data.hits.length)];
-        return randomHit.webformatURL;
+        // Pega uma imagem aleatória dos resultados para mais variedade
+        const randomHit = data.hits[Math.floor(Math.random() * Math.min(5, data.hits.length))];
+        return randomHit.largeImageURL || randomHit.webformatURL;
       }
     }
   } catch (error) {
@@ -80,15 +81,29 @@ export const fetchWikipediaImage = async (animalName: string): Promise<string | 
 export const fetchAnimalImage = async (animalName: string): Promise<string> => {
   const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=800&h=600&fit=crop&q=80';
   
-  // Estratégia de fallback em cadeia
+  console.log('🔍 Buscando imagem para:', animalName);
+  
+  // 1. Tenta Pixabay primeiro (fonte primária)
   const pixabayImage = await fetchPixabayImage(animalName);
-  if (pixabayImage) return pixabayImage;
+  if (pixabayImage) {
+    console.log('✅ Imagem encontrada no Pixabay');
+    return pixabayImage;
+  }
   
-  const apiNinjasImage = await fetchApiNinjasImage();
-  if (apiNinjasImage) return apiNinjasImage;
-  
+  // 2. Se Pixabay falhar, tenta Wikipedia
   const wikipediaImage = await fetchWikipediaImage(animalName);
-  if (wikipediaImage) return wikipediaImage;
+  if (wikipediaImage) {
+    console.log('✅ Imagem encontrada na Wikipedia');
+    return wikipediaImage;
+  }
   
+  // 3. API Ninjas como última opção (pode ser a raposa!)
+  const apiNinjasImage = await fetchApiNinjasImage();
+  if (apiNinjasImage) {
+    console.log('⚠️ Usando imagem da API Ninjas (aleatória)');
+    return apiNinjasImage;
+  }
+  
+  console.log('⚠️ Usando imagem fallback');
   return FALLBACK_IMAGE;
 };
