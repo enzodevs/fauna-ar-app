@@ -40,3 +40,8 @@ coverage/
 
 # Claude
 /CLAUDE.md
+
+android.keystore
+app-release-*.apk
+app-release-*.aab
+.gradle/
