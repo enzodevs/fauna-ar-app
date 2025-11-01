@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: [
-      '.loca.lt'
+      '.loca.lt',
+      '.trycloudflare.com'
     ]
   },
   build: {
