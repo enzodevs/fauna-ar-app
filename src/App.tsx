@@ -60,6 +60,7 @@ function App() {
           pubDate={selectedArticle.pubDate}
           author={selectedArticle.author}
           link={selectedArticle.link}
+          enclosure={selectedArticle.enclosure}
           onBack={handleBackToNews}
         />
       ) : (
