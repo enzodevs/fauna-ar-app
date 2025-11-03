@@ -1,22 +1,12 @@
 # Fauna AR 🐆
 
-Aplicação web de realidade aumentada para visualização de animais da fauna brasileira usando WebXR.
-
-## 🚀 Tecnologias
-
-- **React** + **TypeScript** - Framework e tipagem
-- **Vite** - Build tool e dev server
-- **Three.js** - Renderização 3D
-- **WebXR** - Realidade aumentada nativa
-- **Tailwind CSS** - Estilização
+Aplicação web de realidade aumentada para visualização de animais da fauna brasileira.
 
 ## 📋 Pré-requisitos
 
-- Node.js 18+
-- NPM ou Yarn
-- Navegador com suporte a WebXR (Chrome Android recomendado)
-- Câmera (dispositivo móvel)
-- HTTPS ou localhost (requisito WebXR)
+- Navegador compatível com realidade aumentada (recomendado em dispositivos móveis)
+- Câmera funcional
+- Conexão segura (HTTPS ou localhost)
 
 ## 🔧 Instalação
 
@@ -32,10 +22,10 @@ npm run build
 ```
 ## 📱 Como Usar
 
-1. **Acesse a aplicação** no Chrome Android (navegador recomendado)
+1. **Acesse a aplicação** em um navegador compatível (dispositivo móvel recomendado)
 2. **Permita o acesso à câmera** quando solicitado
 3. **Selecione um animal** na tela inicial
-4. **Toque em "START AR"** para iniciar a sessão WebXR
+4. **Toque em "START AR"** para iniciar a sessão de realidade aumentada
 5. **Procure por uma superfície plana** (mesa, chão, etc.)
 6. **Toque na tela** quando o círculo de mira aparecer para posicionar o animal
 
@@ -67,16 +57,16 @@ fauna-ar/
 3. Recomenda-se modelos otimizados (<5MB)
 
 ### Compatibilidade
-- ✅ Chrome Android (recomendado)
-- ⚠️ Edge Mobile (limitado)
-- ❌ Safari iOS (WebXR não suportado)
-- ❌ Navegadores desktop (WebXR AR não disponível)
+- ✅ Navegadores modernos em Android (recomendado)
+- ⚠️ Navegadores em dispositivos móveis com suporte a AR (limitado)
+- ❌ Safari iOS (AR não suportada)
+- ❌ Navegadores desktop (AR não disponível)
 
 ## 🎯 Funcionalidades
 
 - [x] Landing page com cards de animais
-- [x] Integração WebXR com hit-testing
-- [x] Carregamento de modelos 3D GLB/GLTF
+- [x] Experiência de realidade aumentada
+- [x] Visualização de modelos 3D interativos
 - [x] Posicionamento de modelos em superfícies reais
 - [x] Informações detalhadas sobre os animais
 - [x] Animações dos modelos 3D
@@ -87,11 +77,11 @@ fauna-ar/
 
 ## 🚀 Deploy
 
-Projeto preparado para deploy na Vercel:
+Projeto preparado para deploy em serviços de hospedagem web:
 
 ```bash
 npm run build
-# Upload da pasta dist para Vercel
+# Upload da pasta dist para o serviço de hospedagem
 ```
 
 ## 📝 Licença

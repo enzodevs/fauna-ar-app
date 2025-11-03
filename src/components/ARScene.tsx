@@ -34,14 +34,14 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
           const supported = await navigator.xr.isSessionSupported('immersive-ar');
           setIsARSupported(supported);
           if (!supported) {
-            setError('WebXR AR não é suportado neste dispositivo ou navegador.');
+            setError('Realidade aumentada não é suportada neste dispositivo ou navegador.');
           }
         } catch (err) {
           console.error('Error checking AR support:', err);
           setError('Erro ao verificar suporte para AR.');
         }
       } else {
-        setError('WebXR não está disponível neste navegador.');
+        setError('Realidade aumentada não está disponível neste navegador.');
       }
     };
     
@@ -51,7 +51,7 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
   useEffect(() => {
     if (!mountRef.current || !isARSupported) return;
 
-    // Initialize Three.js scene
+    // Initialize 3D scene
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
@@ -64,7 +64,7 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
     );
     cameraRef.current = camera;
 
-    // Setup renderer with WebXR
+    // Setup AR renderer
     const renderer = new THREE.WebGLRenderer({ 
       antialias: true,
       alpha: true
@@ -189,7 +189,7 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
         mixerRef.current.update(animationSpeed);
       }
 
-      // Handle WebXR frame
+      // Handle AR frame
       if (frame) {
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
@@ -267,7 +267,7 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Three.js Canvas */}
+      {/* AR Canvas */}
       <div ref={mountRef} className="absolute inset-0" />
 
       {/* Instructions Overlay */}
@@ -275,7 +275,7 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
         <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-20">
           <div className="bg-jungle-900/90 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-4 text-center animate-slide-up">
             <h2 className="text-2xl font-bold text-white mb-4">
-              {!isARSupported ? 'AR não disponível' : 'Instruções WebXR'}
+              {!isARSupported ? 'AR não disponível' : 'Como usar'}
             </h2>
             <div className="space-y-4 text-gray-200">
               {isARSupported ? (
@@ -287,9 +287,9 @@ const ARScene: React.FC<ARSceneProps> = ({ animal, onBack }) => {
                 </>
               ) : (
                 <>
-                  <p>❌ WebXR AR não é suportado neste dispositivo</p>
-                  <p>📱 Use Chrome Android mais recente</p>
-                  <p>🔒 Acesse via HTTPS ou localhost</p>
+                  <p>❌ Realidade aumentada não é suportada neste dispositivo</p>
+                  <p>📱 Use um navegador compatível em dispositivo móvel</p>
+                  <p>🔒 Acesse via conexão segura</p>
                 </>
               )}
             </div>
