@@ -22,6 +22,7 @@ export const getCachedAnimalImage = (today: string): string | null => {
 };
 
 export const setCachedAnimalImage = (today: string, imageUrl: string): void => {
+  localStorage.setItem(CACHE_DATE_KEY, today);
   localStorage.setItem(CACHE_IMAGE_KEY, imageUrl);
 };
 
